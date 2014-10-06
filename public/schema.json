@@ -1,0 +1,65 @@
+//Event
+{
+    "_id": NUMBER,
+    "host_id":NUMBER,
+    "name" : "",
+    "date": "",
+    "description": "",
+    "location":{
+        "name":"",
+        "longitude":"",
+        "lattitude":""
+    },
+    "donations": {
+        "desired": NUMBER,
+        "current": NUMBER,
+        "donations_list":[{
+            "user_id": NUMBER,
+            "donation_amount":NUMBER
+        }
+        ]
+    },
+    "volunteers": {
+        "desired": NUMBER,
+        "current": NUMBER,
+        "attending":[
+            {"user_id":NUMBER}]
+    },
+    "rewards":{
+        "type": NUMBER,
+        "amount":NUMBER
+    }
+
+}
+
+
+//user
+
+{
+    "user_id":NUMBER,
+    "username":"",
+    "password":#Encrpted,
+    "name":{
+        "fname": "",
+        "lname": ""
+    },
+    "contact":{
+        "email":"",
+        "phone_number" : NUMBER,
+        "paypal_id":"",
+    },
+    "location":{
+        "zipcode":NUMBER
+    },
+    "attending":[{
+        "event_id":NUMBER,
+        "engagement_type":""
+    }],
+    "donations":[{
+        "event_id":NUMBER,
+        "donation_amount":NUMBER
+    }]
+    "hosting":[{
+        "event_id":NUMBER
+    }],
+}

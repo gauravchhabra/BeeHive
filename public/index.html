@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="beehiveApp"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+  <style>
+    body {
+      padding-top: 60px;
+      padding-bottom: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'>  <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+</head>
+<body ng-controller="myController" class="custom-font">
+
+
+  <!-- Modal for signing in -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+
+
+          <!-- <div class="row" style="width:100%"> -->
+          <center>
+            <!-- <div class="col-md-6" > -->
+            <h1>sign up</h1>
+            <!-- <span id="ppp"></span> -->
+          </center>
+          <!-- </div> -->
+          <!-- <div class="col-md-6" > -->
+          <!-- sign in  -->
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Modal for new event -->
+  <div class="modal fade" id="new-event" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-body centered">
+
+
+          <!-- <div class="row" style="width:100%"> -->
+          <form class="form-horizontal" ng-submit="makeEvent(event)">
+            <fieldset>
+              <h3>
+                <!-- Form Name -->
+<!-- <legend>Form Name</legend>
+-->
+<!-- Text input-->
+<div class="control-group">
+  <center>
+    <label class="control-label" for="event-name">Name</label>
+    <div class="controls">
+      <input id="event-name" name="event-name" type="text" ng-model="event.name" placeholder="Name" class="input-xlarge custom-modal" required="">
+
+    </div>
+  </center>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <center>
+    <label class="control-label" for="event-desc">Description</label>
+    <div class="controls">
+      <input id="event-desc" name="event-desc" type="text" ng-model="event.description" placeholder="Describe!" class="input-xxlarge" required="">
+
+    </div>
+  </center>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <center>
+    <label class="control-label" for="event-street">Street Address</label>
+    <div class="controls">
+      <input id="event-street" name="event-street" type="text" ng-model="event.location.street" placeholder="Street Address" class="input-xxlarge" required="">
+
+    </div>
+  </center>
+</div>
+
+<span>
+  <div class="control-group">
+    <center>
+      <label class="control-label" for="event-city">City</label>
+      <div class="controls">
+        <input id="event-city" name="event-city" type="text" ng-model="event.location.city" placeholder="City" class="input-medium" required="">
+
+      </div>
+    </center>
+  </div>
+
+  <div class="control-group">
+    <center>
+      <label class="control-label" for="event-state">State</label>
+      <div class="controls">
+        <input id="event-state" name="event-state" type="text" ng-model="event.location.state" placeholder="State" class="input-mini" required="">
+
+      </div>
+    </center>
+  </div>
+</span>
+
+<div class="control-group">
+  <center>
+    <label class="control-label" for="event-zip">Zip</label>
+    <div class="controls">
+      <input id="event-zip" name="event-zip" type="text" ng-model="event.location.zip" placeholder="Zip Code" class="input-xlarge" required="">
+
+    </div>
+  </center>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <center>
+    <label class="control-label" for="event-date">Event Date</label>
+    <div class="controls">
+      <input id="event-date" name="event-date" type="text" ng-model="event.date" placeholder="MM/DD/YYYY" class="input-xlarge">
+    </div>
+  </center>
+</div>
+
+<!-- Multiple Checkboxes (inline) -->
+<div class="control-group">
+
+  <label class="control-label" for="checkboxes">Desired Contribution: </label> <br>
+  <div class="controls">
+
+    <label class="checkbox inline" for="checkboxes-0">
+
+      <input type="checkbox" ng-model="event.desire.funds" name="checkboxes" id="checkboxes-0" value="Funds">
+      Funds
+    </label>
+
+
+    <label class="checkbox inline" for="checkboxes-1">
+      <input type="checkbox" ng-model="event.desire.volunteers" name="checkboxes" id="checkboxes-1" value="Volunteers">
+      Volunteers
+    </label>
+  </div>
+</div>
+
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for="event-create"></label>
+  <div class="controls">
+    <center>
+      <button id="event-create" name="event-create" class="btn btn-success">Create Event!</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </center>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+</h3>
+
+<!-- </div> -->
+<!-- <div class="col-md-6" > -->
+<!-- sign in  -->
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <![endif]-->
+            <div class="navbar navbar-inverse navbar-fixed-top nav-custom" role="navigation" style="margin:0px">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation </span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">
+                    <img src="img/BeeHiveNoBG.png" class="logo">
+                  </a>
+                </div>
+
+
+                <div class="navbar-collapse collapse" >
+                  <form class="navbar-form navbar-right" role="form">
+
+                    <span id="ppp"></span>
+                    <!-- <a href="#myModal" role="button" class="btn btn-lg btn-success" type="submit" data-toggle="modal">Sign Up or Sign In</a> -->
+
+                  </form>
+                </div><!--/.navbar-collapse -->
+
+
+              </div>
+            </div>
+
+
+
+            <div class="container-full" style="margin:0px; padding:0px">
+              <!-- Example row of columns -->
+              <div class="row" style="width:100%; margin-left:0px">
+
+                <!-- This is the bootstrap row that contains the div where the map lives -->
+                <div class="col-md-8" style="background-color:#284732; padding:0; margin:0;">
+                  <div id="map">
+                  </div>
+                </div>
+
+                <div ng-show="eventSelected==99">
+                  <!-- This is the right side where the event listing goes -->
+                  <div class="col-md-4 event-view">
+                    <center>
+                      <h1>[events near you]</h1>
+                      <hr> 
+                    </center>
+
+                    <div>
+                      <ul>
+
+
+                        <li ng-repeat="event in eventData" ng-click="selectEvent($index)" ng-mouseover="select($index)" ng-class="{active: $index == selected}" style="overflow:hidden">
+
+
+                          <!-- <img src="img/hive-pin.png" width="10%" > <br> -->
+                          <center>
+                           <div class="bold"> {{event.name}} </div> 
+                           {{event.description}} 
+
+                         <!-- <span ng-show="$index==0">
+                            <img src="img/animal-pic.jpg" width="15%" style="display:inline; float:left; float:top">
+                          </span> -->
+
+                          <div ng-show="$index==0">
+                            <img src="img/tree.jpg" width="15%" style="display:inline; float:left; float:top">
+                          </div>
+
+                          <div ng-show="$index==1">
+                            <img src="img/gardening.jpg" width="15%" style="display:inline; float:left; float:top">
+                          </div>
+
+                          <div ng-show="$index==2">
+                            <img src="img/supplies.gif" width="15%" style="display:inline; float:left; float:top">
+                          </div>
+
+                          <div ng-show="$index==3">
+                            <img src="img/happy-child.jpg" width="15%" style="display:inline; float:left; float:top">
+                          </div>
+                          <br>
+                          <img src="img/hive-pin.png" width="8%">
+                          {{event.location.name}}
+
+
+                        </center>
+
+                      </li>
+
+
+                    </ul>
+                  </div>
+
+                  <a href="#new-event" role="button" class="btn btn-lg btn-primary" type="submit" data-toggle="modal">Make a New Event!
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </a> 
+
+                </div>
+
+              </div>
+
+
+
+              <!-- Drilldown for an event goes here: -->
+              <div ng-show="eventSelected!=99">
+                <center>
+                  <h1>{{eventData[eventSelected].name}}: </h1>
+                  <h3>{{eventData[eventSelected].description}}</h3>
+                  <hr>
+                  <img src="img/tree.jpg" width="10%" style="display:inline; float:left; float:top">
+
+                  <!-- <div style="display:inline; float:right; float:top"> -->
+                  <!-- </div> -->
+                  <img src="img/hive-pin.png" width="4%">
+                  {{eventData[eventSelected].location.name}}
+                  <hr>
+                  "Hello! I am organizing an event to come plant trees but I need a little extra help with money to pay for gas and food!"
+                </center>
+                <br>
+                <br>
+                <center>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                  <input type="hidden" name="cmd" value="_donations">
+                  <input type="hidden" name="business" value="sahil.ansari3@gmail.com">
+                  <input type="hidden" name="lc" value="US">
+                  <input type="hidden" name="item_name" value="nothing">
+                  <input type="hidden" name="amount" value="15.00">
+                  <input type="hidden" name="currency_code" value="USD">
+                  <input type="hidden" name="no_note" value="0">
+                  <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
+                  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                </center>
+                <br>
+                <br>
+                <button ng-click="selectEvent(99)" class="btn btn-default">
+                  <span class="glyphicon glyphicon-arrow-left"> [go back to event view] 
+                  </button>
+
+                </div>
+
+              </div>
+
+              <hr>
+
+              <footer>
+                <p>&copy; ebay inc. 2014</p>
+              </footer>
+            </div> <!-- /container -->       
+            <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+            <script src="js/vendor/bootstrap.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-animate.js"></script>
+            <script src="js/main.js"></script>
+            <script src="js/controllers.js"></script>
+
+            <script src="https://www.paypalobjects.com/js/external/api.js"></script>
+            <script>
+              paypal.use( ["login"], function(login) {
+                login.render ({
+                  "appid": "ARmg5xDXfWi4Xaooi1wPV6TmcTmvrnbV4gPa6G5iOkUO8TfgaP81RpB2fU2g",
+                  "authend": "sandbox",
+                  "scopes": "openid",
+                  "containerid": "ppp",
+                  "locale": "en-us",
+                  "returnurl": "http://localhost:8000/"
+                });
+              });
+            </script>
+
+            <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+
+          </body>
+          </html>

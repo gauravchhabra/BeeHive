@@ -1,0 +1,23 @@
+{
+    "events":[
+        {
+            "event_id" :1,
+            "name" : "Pet Adoption",
+            "description":"",
+            "location":{
+                "name":"San Jose",
+                "longitude":37.333877,
+                "lattitude":-121.882644,
+            },
+        },
+        {
+            "event_id" :2,
+            "name" : "School Kit doantion",
+            "description":"",
+            "location":{
+                "name":"Santa Clara",
+                "longitude":37.333577,
+                "lattitude":-121.882744,
+            },
+        }]
+}

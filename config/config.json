@@ -1,0 +1,80 @@
+{
+
+    "databaseConfig": {
+        //"host": "128.238.167.255",
+        "host": "localhost",
+        "database": "beeHive"
+    },
+
+    "ppOauthConfig":{
+        "client_id": "AWtSRhAQSPJxUKWgCe3NRlFmmzsVoA-9FNwxBqYYx_ILf_9UWUgyB3Nh0xJO",
+        "client_secret": "EOUaNhBFsGkqsl89WhxwmWwy3uZlEffPTnbNXo-Sx7NWMlr9A2KwYv-D_SS5",
+        "endpoint": "api.sandbox.paypal.com"
+    },
+
+    "express": {
+        "view cache": false,
+        "view engine": "html",
+        "views": "path:./public/"
+    },
+
+    "view engines": {
+        "html": {
+            "module": "ejs",
+            "renderer": "__express"
+        }
+    },
+
+    "middleware": {
+
+        "static": {
+            "module": {
+                "arguments": [ "path:./public" ]
+            }
+        },
+
+        "router": {
+            "module": {
+                "arguments": [{ "directory": "path:./controllers" }]
+            }
+        },
+
+        "fileNotFound": {
+            "enabled": true,
+            "priority": 130,
+            "module": {
+                "name": "kraken-js/middleware/404",
+                "arguments": [ "errors/404" ]
+            }
+        },
+
+        "serverError": {
+            "enabled": true,
+            "priority": 140,
+            "module": {
+                "name": "kraken-js/middleware/500",
+                "arguments": [ "errors/500" ]
+            }
+        },
+
+        "appsec": {
+            "module": {
+                "name": "lusca",
+                "arguments": [
+                    {
+                        "csrf": false,
+                        "xframe": false
+                    }
+                ]
+            }
+        },
+        "securityConfig": {
+            "priority": 115,
+            "enabled": true,
+            "module": {
+                "name": "path:./lib/secConfig"
+            }
+        }
+
+    }
+}
